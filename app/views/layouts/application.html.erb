@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Letsmeet</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css" />
+<link rel="stylesheet" href="/themes/ugly.css" />
+
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
+<script src="http://localhost:3000/gritter/js/jquery.gritter.min.js"></script>
+<link href="http://localhost:3000/gritter/css/jquery.gritter.css" rel="stylesheet" type="text/css" />
+<script src="http://js.pusher.com/2.0/pusher.min.js"></script>
+<script src="http://localhost:3000/PusherNotifier.js"></script>
+<script type="text/javascript" src="http://api.maps.nokia.com/2.2.4/jsl.js?with=all" > </script>
+
+</head>
+<body data-theme="a">
+
+<!--<div id="user_nav"  data-theme="d""> 
+  <% if current_user %>
+    Logged in as <%= current_user.name %>.
+    <%= link_to "Log out", log_out_path %>
+	
+   <% end %>
+</div>-->
+
+
+<!--<% flash.each do |name, msg| %>
+  <%= content_tag :div, msg, :id => "flash_#{name}" %>
+<% end %>-->
+
+<%= yield %>
+
+</body>
+</html>

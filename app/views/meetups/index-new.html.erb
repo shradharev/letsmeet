@@ -1,0 +1,21 @@
+<div data-role="page" id="home" data-theme="b">
+
+	<div data-role="content">
+	
+	<div id="branding">
+		<h1>Let's meet!</h1>
+	</div>
+	
+	<div class="choice_list"> 
+	<h2>Who are you meeting today?</h2>
+	
+	<ul data-role="listview" data-inset="true" >
+	<li><%= link_to image_tag('/events_icon.jpg')+'Upcoming meetups', meetups_path  %></li>
+	<li><%= link_to image_tag('/Create_Event.jpg')+'New Meetup', new_meetup_path  %></li>
+
+	</ul>	
+	
+	</div>
+	</div>
+
+</div><!-- /page -->

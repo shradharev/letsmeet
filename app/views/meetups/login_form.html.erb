@@ -1,0 +1,106 @@
+<html>
+
+<head>
+
+<link href="Login.css" rel="stylesheet" />
+<script type="text/javascript" src="jquery-1.2.6.min.js"></script>
+<!--script type="text/javascript" src="jquery.easing.1.3.js"></script--> 
+
+<script language="javascript">
+$(document).ready(function() {
+	
+	$('#nav-bar').fadeIn();
+	
+	$('#Log-in').click(function() {
+		
+		$('#Log-in').css('background-color', '#006699');
+		$('#signUp').css('background-color', '#000000');
+		$('#submit').hide().css({'left' : '0px'});
+		$('#SignupForm').hide().css({'top' : '0px'});
+		
+		$('#loginBtn').show().animate({
+		
+			down   : '70%',
+			
+		},400,function(){
+			
+			$('#loginBtn').css({'-webkit-transform' : 'rotate(-0deg)','-moz-transform' : 'rotate(-0deg)' });
+		
+		});
+		///
+		$('#Login_form').show().animate({
+	
+			top   : '60px',
+			
+		},700,function(){
+			
+			//$('#image').css({'-webkit-transform' : 'rotate(-90deg)','-moz-transform' : 'rotate(-90deg)' });
+		});
+	});
+	
+	$('#signUp').click(function() {
+		
+		$('#signUp').css('background-color', '#006699');
+		$('#Log-in').css('background-color', '#000000');
+		$('#loginBtn').hide();
+		$('#Login_form').hide().css({'top' : '0px'});
+		
+		$('#submit').show().animate({
+		
+			down   : '70%',
+			
+		},400,function(){
+			
+			$('#submit').css({'-webkit-transform' : 'rotate(-0deg)','-moz-transform' : 'rotate(-0deg)' });
+		
+		});
+		///
+		$('#SignupForm').show().animate({
+	
+			top   : '60px',
+			
+		},700,function(){
+			
+			//$('#image').css({'-webkit-transform' : 'rotate(-90deg)','-moz-transform' : 'rotate(-90deg)' });
+		});
+	});
+	
+});
+</script>
+</head>
+<body>
+
+	<img src="result.png" id="loginBtn" />	
+	<img src="submit.png" id="submit" />
+
+	<div class="loginform" id="Login_form">
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this meetup from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :Username %><br />
+    <%= f.text_field :username %>
+  </div>
+
+   <div class="field">
+    <%= f.label :Password %><br />
+    <%= f.text_field :password %>
+  </div>
+ 
+ 
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+</body>
+</html>

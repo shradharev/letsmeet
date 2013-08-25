@@ -1,0 +1,69 @@
+<div data-theme="d">
+<%= form_for(@meetup) do |f| %>
+  <% if @meetup.errors.any? %>
+				<div id="error_explanation">
+				  <h2><%= pluralize(@meetup.errors.count, "error") %> prohibited this meetup from being saved:</h2>
+
+				  <ul>
+				  <% @meetup.errors.full_messages.each do |msg| %>
+					<li><%= msg %></li>
+				  <% end %>
+				  </ul>
+				</div>
+  <% end %>
+
+  <div class="field">
+		   <b> <%= f.label :Name %></b>
+			<%= f.text_field :name %>
+  </div>
+
+<div class="field">
+
+   <b> <%= f.label :When %></b><br />
+	
+		 <div class="ui-grid-a">
+				
+				<div class="ui-block-a">
+					  <div class="ui-bar ui-bar-c" style="height:60px">
+					  <%= f.date_field :when %>
+					  </div>
+			   </div>
+   
+			   <div class="ui-block-b">
+			   
+				  <div class="ui-bar ui-bar-c" style="height:60px">
+			   <!-- This is not getting saved.. -->
+			  <input id="Field2-1" name="Field2-1" type="time" class="field text" value="" size="2" maxlength="2" tabindex="2" />
+			  
+				  </div>
+			  </div>
+         </div>
+ </div>
+
+
+  <div class="field">
+			   <b><%= f.label :Where %></b><br />
+				<div id="mapSearchbox"></div>
+				 <ul id="results"></ul>
+				<%= f.hidden_field :where , :id => "set_location", :value=> "dummy"%>
+                <%= f.hidden_field :placename , :id => "set_placename", :value=> ""%>
+  </div>
+  
+  
+   <div class="field">
+			<b><%= f.label :Friends %></b><br />
+		 <%= f.collection_select(:user_ids, User.all, :id, :name,{}, {:multiple => true, :size =>4, :"data-native-menu" => 'false' }) %>
+
+
+
+  </div>
+ <br>
+
+  <div class="actions">
+        <%= f.submit %>
+  </div>
+
+<% end %>
+</div>
+
+

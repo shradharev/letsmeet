@@ -1,0 +1,41 @@
+<div data-role="page" id="home" data-theme="a">
+
+	<div data-role="content" data-theme="a" >
+	
+		<div data-role="header" data-theme="a"> 
+		<h1> Let's meet!</h1>
+			</div> 
+		
+	
+	
+<img class="main-image" src="5.jpg"/>
+	
+	
+	
+	<ul data-role="listview" data-inset="true"  data-theme="a">
+	<li><%= link_to image_tag('/img_crtRole.gif')+'Pending meetups', '/pending'  %></li>
+	<li><%= link_to image_tag('/img_crtStaff.gif')+'Upcoming meetups', '/upcoming'  %></li>
+	<li><%= link_to image_tag('/img_crtStudent.gif')+'New Meetup', new_meetup_path  %></li>
+
+	</ul>
+	
+	<script>
+$(function () {
+		//establish Pusher connection
+		var pusher = new Pusher('005d401511dedbba314f');
+		var myChannel = pusher.subscribe('new_invitations');
+		myChannel.bind('data-changed', function(data){
+			updateResults(data)
+		});
+	});
+	
+
+
+function updateResults(data){
+	$("#invi").html("1 new invitation");
+	}
+</script>
+	</div>
+	</div>
+</div><!-- /page -->
+

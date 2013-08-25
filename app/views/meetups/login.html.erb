@@ -1,0 +1,73 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @meetup.name %>
+</p>
+
+<p>
+ <b>Where:</b> 
+   <div id = "meetup_where"> </div>
+</p>
+
+
+<div data-role="collapsible">
+    <h4>Map</h4>
+<div id="map" style="width: 500px; height: 270px;"></div>
+</div>
+
+<p>
+  <b>When:</b>
+  <%= @meetup.when %>
+</p>
+
+
+<p>
+  <b>Who:</b>
+  <% @meetup.users.each do |user| %>
+  <ul> <%= user.name %> </ul>
+  <% end %>
+</p>
+  <b>Want to say something to the group?</b>
+
+        <div data-role="fieldcontain">
+            <textarea name="" id="textarea1" placeholder="" data-mini="true"></textarea>
+        </div>
+		   <input type="submit" value="Submit">
+<script>
+	nokia.Settings.set("appId", "_peU-uCkp-j8ovkzFGNU"); 
+    nokia.Settings.set("authenticationToken", "gBoUkAMoxoqIWfxWA5DuMQ");
+	
+		var map = new nokia.maps.map.Display(document.getElementById("map"), {
+			// Initial center and zoom level of the map
+			zoomLevel: 10, 
+			center: [52.51, 13.4],
+			components: [new nokia.maps.map.component.Behavior(),
+				// Creates UI to easily switch between street map satellite and terrain mapview modes
+				new nokia.maps.map.component.TypeSelector(),
+				// ZoomBar provides a UI to zoom the map in & out
+				new nokia.maps.map.component.ZoomBar(),
+				// Add ContextMenu component so we get context menu on right mouse click / long press tap
+				new nokia.maps.map.component.ContextMenu()
+			]
+		});
+		
+		var place = '<%= raw @meetup.where %>';
+		
+		//var jsonPlace = JSON.parse(place);
+	     var jsonPlace = JSON.parse(place);
+		 
+		var mapPlaceWidget = new nokia.places.widgets.Place({
+			map: map,
+			placeId : jsonPlace.placeId
+		});
+
+		var placeName = jsonPlace.title;
+		$("#meetup_where").html(placeName);
+
+
+		//alert(jsonPlace);
+		//mapPlaceWidget.setPlace({ href: jsonPlace.href });
+</script>
+<%= link_to 'Edit', edit_meetup_path(@meetup) %> |
+<%= link_to 'Back', meetups_path %>

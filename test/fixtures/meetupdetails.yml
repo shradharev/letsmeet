@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  meetupid: 1
+  userid: 1
+  answer: MyString
+  isowner: MyString
+
+two:
+  meetupid: 1
+  userid: 1
+  answer: MyString
+  isowner: MyString

@@ -1,0 +1,47 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+	<meta charset="UTF-8">
+	<title>Upcoming Events</title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="stylesheet" href="jquery.mobile.structure-1.0.1.css" />
+	<link rel="apple-touch-icon" href="images/launch_icon_57.png" />
+	<link rel="apple-touch-icon" sizes="72x72" href="images/launch_icon_72.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="images/launch_icon_114.png" />
+	<link rel="stylesheet" href="jquery.mobile-1.0.1.css" />
+	<!--<link rel="stylesheet" href="custom.css" />-->
+	<script src="js/jquery-1.7.1.min.js"></script>
+	<script src="js/jquery.mobile-1.0.1.min.js"></script>
+</head> 
+<body> 
+<div  data-theme="a" data-role="page">
+	
+	<div data-role="header"  data-theme="a" > 
+		<h1> Pending Events</h1>
+	</div> 
+      <br>
+	  <br>
+	<div data-role="content">
+	
+
+
+	<div class="choice_list"> 
+	
+		<% @meetups.each do |meetup| %>
+	<ul data-role="listview" data-inset="true" >
+	<!--<li><a href="show_event.html" data-transition="slidedown"> <img src="pending_event.jpg"/> <h2> Party Tonight</h2> </a></li>
+	<li><a href="show_event.html" data-transition="slidedown"> <img src="pending_event.jpg"/> <h2> Cafe Coffee Day  </h2> </a></li>
+	<li><a href="show_event.html" data-transition="slidedown"> <img src="pending_event.jpg"/> <h2> Lunch @ Infusion </h2> </a></li>-->
+		<li><%= link_to image_tag('/img_crtRole.gif')+meetup.name, meetup  %></li>
+	
+	</ul>	
+	
+	    <% end %>
+	
+	</div>
+
+	</div>
+
+</div><!-- /page -->
+</body>
+</html>

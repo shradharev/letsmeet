@@ -1,0 +1,245 @@
+<div data-role="content" data-theme="a">
+
+
+ <div  data-role="header" data-theme="a">
+        <h3>
+         <b>   <%= @meetup.name %></b>
+        </h3>
+    </div>  
+ <br>
+ <br>
+
+ <div data-theme="a" class="ui-grid-a" >
+<div class="ui-bar ui-bar-a"><p><b>Organized by:</b> 
+  <%= @crby.name %>
+  </p>
+  </div>
+
+  </div>
+  <br>
+
+
+<div class="ui-grid-a">
+    <div class="ui-block-a"><div class="ui-bar ui-bar-a"><p>
+ <b>Where :</b>   <%= @meetup.placename%>
+
+</p></div></div>
+    <div class="ui-block-b"><div class="ui-bar ui-bar-a" >
+	
+<p>
+  <b>When:</b>
+  <%= @meetup.when %>
+</p>
+	
+	</div></div>
+</div>
+<br>
+<div data-role="collapsible">
+    <h4>Map</h4>
+<div id="map" style="width: 500px; height: 270px;"></div>
+
+<!-- Share location -->
+ <%= form_for  @meetup  do |f| %>
+		 <% @meetup.meetupdetails.each do |m| %>
+		  <% if m.user_id == session[:userid].to_i  %>
+			<%= f.fields_for :meetupdetails, m do |m_f| %>
+			   <%= m_f.hidden_field :lat, :id => "lt", :value => "12.98" %> 
+			   <%= m_f.hidden_field :long, :id => "ln", :value => "77.58"%> 
+			<% end %>
+		  <% end %>
+		<% end %>
+	<%= f.submit "Share my location"%> 
+<% end %>
+</div>
+
+<br>
+ 
+ <div id ="update-friends">
+ <p><b>Who?</b></p><br>
+  <% @meetup.meetupdetails.each do |m| %>
+  <ul> <img src="<%= m.user.pic %>"> <%= m.user.name %> says :  <img src="/<%= m.answer %>_i.JPG"/></ul>
+  <% end %>
+</div>
+<br>
+
+<div data-role="collapsible">
+    <h4>Are you going?</h4>
+  	
+			
+			<div class="ui-grid-a">
+			<div class="ui-block-a"><div class="ui-bar ui-bar-c" style="height:60px"><p>
+			
+			  <%= form_for  @meetup do |f| %>
+		 <% @meetup.meetupdetails.each do |m| %>
+		  <% if m.user_id == session[:userid].to_i %>
+			<%= f.fields_for :meetupdetails, m do |m_f| %>
+							<%= m_f.hidden_field :answer , :value=> "Y"%>
+			  			  	<%= f.submit "Yes, I'm in!"%> 
+
+			<% end %>
+		  <% end %>
+		<% end %>
+	<% end %>
+
+			</div></div>
+    <div class="ui-block-b"><div class="ui-bar ui-bar-c" style="height:60px">
+	
+		  <%= form_for  @meetup do |f| %>
+		 <% @meetup.meetupdetails.each do |m| %>
+		  <% if m.user_id == session[:userid].to_i  %>
+			<%= f.fields_for :meetupdetails, m do |m_f| %>
+				<%= m_f.hidden_field :answer , :value=> "N"%>
+			<%= f.submit "Sorry can't make it"%> 
+			<% end %>
+		  <% end %>
+		<% end %>
+	<% end %>
+	
+	
+	</div></div>
+</div>
+			
+
+
+
+</div>
+<br>
+
+
+<div id ="chat">
+
+
+<%= form_for @meetup do |f| %>
+<h2><b>Say something.......</b></h2><br>
+<% @meetup.chats.each do |ch| %>
+ <% if ch.user_id.to_s != '' %>
+ <ul><img src="<%= User.find(ch.user_id).pic %>"> <%= User.find(ch.user_id).name %> says : <%=ch.content %> </ul>
+ <% end %>
+<% end %>
+<% @meetup.chats.each do |c| %>
+    <% if c.content.to_s == '' %>
+      <%= f.fields_for :chats, c do |c_f| %>
+	   <%= c_f.text_field :content ,:required => true %>
+	   	<%= c_f.hidden_field :user_id , :id => "user_id", :value=> session[:userid]%>
+	  <% end %> 
+	<% end %> 
+ <% end %>
+ 	<%= f.submit "Send"%> 
+<% end %>
+</div>
+
+<div data-role="footer" class="ui-bar" data-theme="a">
+    <a href="#" data-icon="twitter">Twitter</a>
+    <a href="#" data-icon="facebook">Facebook</a>
+</div>
+		   
+		   
+
+<script>
+
+  //set blore as default
+                var lat = 12.98;
+                var long = 77.58;
+$(document).ready(function() {
+     navigator.geolocation.getCurrentPosition(
+             onSuccess,
+             onError, {
+                 enableHighAccuracy: true,
+                 timeout: 20000,
+                 maximumAge: 120000
+             }
+     );
+                
+   function onSuccess(position) {
+                                lat = position.coords.latitude;
+                                long = position.coords.longitude;
+                                $('#lt').val(position.coords.latitude);
+                                $('#ln').val(position.coords.longitude);
+   }
+   
+   function onError(err) {
+       var message;
+
+       switch (err.code) {
+       case 0:
+         message = 'Unknown error: ' + err.message;
+         break;
+       case 1:
+         message = 'You denied permission to retrieve a position.';
+         break;
+       case 2:
+         message = 'The browser was unable to determine a position: ' + error.message;
+         break;
+       case 3:
+         message = 'The browser timed out before retrieving the position.';
+         break;
+       }
+    }
+
+});
+
+
+                                nokia.Settings.set("appId", "_peU-uCkp-j8ovkzFGNU"); 
+        nokia.Settings.set("authenticationToken", "gBoUkAMoxoqIWfxWA5DuMQ");
+                                var map = new nokia.maps.map.Display(document.getElementById("map"), {
+                                                // Initial center and zoom level of the map
+                                                zoomLevel: 10, 
+                                                center: [12.98, 77.58],
+                                                components: [new nokia.maps.map.component.Behavior(),
+                                                                // Creates UI to easily switch between street map satellite and terrain mapview modes
+                                                                new nokia.maps.map.component.TypeSelector(),
+                                                                // ZoomBar provides a UI to zoom the map in & out
+                                                                new nokia.maps.map.component.ZoomBar(),
+                                                                // Add ContextMenu component so we get context menu on right mouse click / long press tap
+                                                                new nokia.maps.map.component.ContextMenu()
+                                                ]
+                                });
+                                
+                                var place = '<%= raw @meetup.where %>';
+                                
+                                //var jsonPlace = JSON.parse(place);
+                     var jsonPlace = JSON.parse(place);
+                                
+                                var mapPlaceWidget = new nokia.places.widgets.Place({
+                                                map: map,
+                                                placeId : jsonPlace.placeId
+                                });
+
+                                var placeName = jsonPlace.title;
+                                $("#meetup_where").html(placeName);
+
+                                //also mark the destination
+                                
+                                var dest = new nokia.maps.map.StandardMarker([jsonPlace.position.latitude, jsonPlace.position.longitude], {
+                                text: placeName,
+                                textPen: {
+                                                                strokeColor: "#333"
+                                                }
+                                });
+
+                                map.objects.add(dest);
+
+                <% @meetup.meetupdetails.each do |m| %>
+                                var lati = 40.42;
+                                var longi = 98.73;
+                                <% if m.lat.to_s != '' %>
+                                  lati = <%= m.lat %>;
+                                <% end %>
+                                <% if m.long.to_s != '' %>
+                                  longi = <%= m.long %>;
+                                <% end %>
+                                var marker = new nokia.maps.map.StandardMarker([lati,longi], {
+                                text: "<%=User.find(m.user_id).name %>", 
+                                brush: {
+                                                                color: "#F80"
+                                                },
+                                textPen: {
+                                                                strokeColor: "#333"
+                                                }
+                                });
+
+                                map.objects.add(marker);
+                                <% end %>
+</script>
+
+</div>

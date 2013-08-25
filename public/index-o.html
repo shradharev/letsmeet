@@ -1,0 +1,39 @@
+<!DOCTYPE html> 
+<html> 
+	<head>
+  <meta charset="UTF-8">	
+	<title>Meet App</title> 
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="stylesheet" href="jquery.mobile.structure-1.0.1.css" />
+	
+	<link rel="stylesheet" href="jquery.mobile-1.0.1.css" />
+	<!--<link rel="stylesheet" href="custom.css" />-->
+	<script src="js/jquery-1.7.1.min.js"></script>
+	<script src="js/jquery.mobile-1.0.1.min.js"></script>
+</head> 
+
+<body> 
+<div data-role="page" id="home" data-theme="c">
+
+	<div data-role="content">
+	
+	<div id="branding">
+		<h1>Let's meet!</h1>
+	</div>
+	
+	<div class="choice_list"> 
+	<h2>Who are you meeting today?</h2>
+	
+	<ul data-role="listview" data-inset="true" >
+	<li><%= link_to image_tag('/events_icon.jpg')+'Upcoming meetups', meetups_path  %></li>
+	<li><%= link_to image_tag('/Create_Event.jpg')+'New Meetup', new_meetup_path  %></li>
+
+	</ul>	
+	
+	</div>
+	</div>
+
+</div><!-- /page -->
+</body>
+</html>

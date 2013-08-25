@@ -1,0 +1,72 @@
+<div data-role="header" data-theme="a"> 
+		<h1>New Meet Up</h1>
+	</div> 
+<br>
+<br>
+<%= render 'form' %>
+
+
+
+<script>
+$(function() {
+  var pusher = new Pusher('005d401511dedbba314f');
+  var channel = pusher.subscribe('my_notifications');
+  var notifier = new PusherNotifier(channel);
+});
+</script>
+
+ <script>
+	//nokia.Settings.set("appId", "qIcfxFqGXIbUXS3h1DRr"); 
+    //nokia.Settings.set("authenticationToken", "UphMryg8D56qK6jW5oHKUg");
+	var lat;
+	var lon;
+	if (navigator.geolocation)
+    {
+	 navigator.geolocation.getCurrentPosition(showPosition);
+	}
+	
+	function showPosition(position)
+    {
+		lat = position.coords.latitude;
+        lon = position.coords.longitude;
+    }
+	
+	nokia.Settings.set("appId", "_peU-uCkp-j8ovkzFGNU"); 
+    nokia.Settings.set("authenticationToken", "gBoUkAMoxoqIWfxWA5DuMQ");
+	
+
+	    var resultList = new nokia.places.widgets.ResultList ({
+        targetNode: 'results',
+        perPage: 1,
+        events: [{
+            rel: 'nokia-place-name',
+            name: 'click',
+            handler: function (jsonObj) {
+                var pp = new nokia.places.Place ({
+                    placeId: jsonObj.placeId,
+                    targetNode: 'detail'
+                });
+            }
+        }]
+    });
+
+	var sb = new nokia.places.widgets.SearchBox({
+    targetNode: 'mapSearchbox',
+	 searchCenter: function () {
+            return {
+                latitude: lat,
+                longitude: lon
+            }
+	  },
+    onResults: function (data) {
+	            resultList.setData(data);
+	var sel = resultList.getCurrentPageData();
+	$("#set_location:hidden").val(JSON.stringify(sel[0]));
+	$("#set_placename:hidden").val(sel[0].title);
+
+
+    }  
+});
+
+
+   </script>
